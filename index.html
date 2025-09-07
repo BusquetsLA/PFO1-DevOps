@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="estilos.css">
   <title>Práctica Formativa 1 - Seminario de actualización DevOps</title>
 </head>
+
 <body>
   <header>
     <h1>Práctica Formativa 1 - Seminario de actualización DevOps</h1>
@@ -39,44 +42,46 @@
     </section>
   </main>
   <script>
-  // Envío de datos personales al backend usando fetch (JSON)
-  const form = document.getElementById('perfil-form');
-  const resultado = document.getElementById('resultado');
+    // Envío de datos personales al backend usando fetch (JSON)
+    const form = document.getElementById('perfil-form');
+    const resultado = document.getElementById('resultado');
 
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      resultado.textContent = 'Enviando...';
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        resultado.textContent = 'Enviando...';
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
 
-      try {
-        const resp = await fetch('/api/registrar.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
-        });
+        try {
+          const resp = await fetch('/api/registrar.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
 
-        const data = await resp.json().catch(() => ({ status: 'error', message: 'Respuesta no válida' }));
-        if (resp.ok && data.status === 'ok') {
-          resultado.textContent = 'Registro OK';
-          resultado.style.color = 'green';
-        } else {
-          resultado.textContent = `Error: ${data.message || 'Error al registrar'}`;
+          const data = await resp.json().catch(() => ({ status: 'error', message: 'Respuesta no válida' }));
+          if (resp.ok && data.status === 'ok') {
+            resultado.textContent = 'Registro OK';
+            resultado.style.color = 'green';
+          } else {
+            resultado.textContent = `Error: ${data.message || 'Error al registrar'}`;
+            resultado.style.color = 'red';
+          }
+        } catch (err) {
+          resultado.textContent = 'Error de red o servidor no disponible';
           resultado.style.color = 'red';
         }
-      } catch (err) {
-        resultado.textContent = 'Error de red o servidor no disponible';
-        resultado.style.color = 'red';
-      }
-    });
-  }
+      });
+    }
   </script>
-  </body>
-  </html>
-
-
-    </section>
-  </main>
 </body>
+
+</html>
+
+
+</section>
+</main>
+</body>
+
 </html>
